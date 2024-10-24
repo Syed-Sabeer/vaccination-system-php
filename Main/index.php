@@ -1,4 +1,5 @@
 <?php 
+include("../Utilities/connection.php");
 include("./Common/Nav.php");
 ?>
 <?php
@@ -16,7 +17,9 @@ if ($_SESSION['registration_step'] < 2) {
     exit;
 }
 
-// Proceed with the rest of your page's logic after validation
+
+$query = "SELECT * FROM vaccine ORDER BY id DESC LIMIT 10"; // Adjust 'id' as necessary
+$result = mysqli_query($con, $query);
 ?>
 
 
@@ -96,7 +99,7 @@ if ($_SESSION['registration_step'] < 2) {
         <div class="row">
           <div class="col-xl-6 col-lg-7">
             <div class="content-area">
-              <h6 class="color-primary mb-4p">About Us</h6>
+              <h6 class="color-prOur Vaccinationimary mb-4p">About Us</h6>
               <h2 class="light-black mb-16">A Legacy of Compassionate Care!</h2>
               <p class="gray mb-32">Lorem ipsum dolor sit amet consectetur. Vestibulum elit eu vulputate tristique enim
                 molestie neque. Ultricies arcu
@@ -127,36 +130,43 @@ if ($_SESSION['registration_step'] < 2) {
       </div>
     </section>
     <!-- About Us End-->
-
-    <!-- Services Section Start -->
-    <section class="services p-120">
-      <div class="container">
-        <h6 class="color-primary fw-600 mb-4p">Vaccinations</h6>
-        <h2 class="light-black mb-32">Our Care Offerings</h2>
-        <div class="row">
-          <div class="col-xl-4 col-lg-6 col-md-6">
-            <div class="service-block mb-32">
-              <div class="image-circle">
-                <img src="assets/media/services/service-1.png" alt="">
-              </div>
-              <div class="text-block">
-                <h4 class="light-black mb-16">Pharmacy Service</h4>
-                <p class="gray">Lorem ipsum dolor sit amet consect etur. Vestibulum elit eu vulputate tristique enim.
-                </p>
-              </div>
-              <div class="bottom-bar">
-                <a href="services-detail.html" class="cus-btn small-pad-2">Acquire Service</a>
-                <a href="services-detail.html" class="color-primary">
-                  <h6 class="fw-600">Learn More <i class="fal fa-chevron-right"></i></h6>
-                </a>
-              </div>
-            </div>
+<style>
+  .image-circle{
+    /* width: 30%; */
+    height: 35%;
+  }
+</style>
+<!-- Vaccinatiom Section Start -->
+<section class="services p-120">
+  <div class="container">
+    <h6 class="color-primary fw-600 mb-4p">Vaccinations</h6>
+    <h2 class="light-black mb-32">Our Vaccination Offerings</h2>
+    <div class="row">
+      <?php while($row = mysqli_fetch_assoc($result)): ?>
+      <div class="col-xl-4 col-lg-6 col-md-6">
+        <div class="service-block mb-32">
+          <!-- Circular Image -->
+          <div class="image-circle">
+            <img src="../Hospital/<?php echo $row['image']; ?>" alt="<?php echo $row['name']; ?>">
           </div>
-       
+          <!-- Vaccine Name and Description -->
+          <div class="text-block">
+            <h4 class="light-black mb-16"><?php echo $row['name']; ?></h4>
+            <p class="gray">
+              <?php echo substr($row['description'], 0, 100); ?>... <!-- Limit description to 2 lines -->
+            </p>
+          </div>
+          <!-- Book Appointment Button -->
+          <div class="bottom-bar">
+            <a href="vaccine_detail.php?vaccine_id=<?php echo $row['id']; ?>" class="cus-btn small-pad-2">Book An Appointment</a>
+          </div>
         </div>
       </div>
-    </section>
-    <!-- Services Section End -->
+      <?php endwhile; ?>
+    </div>
+  </div>
+</section>
+<!-- Vaccinatiom Section End -->
 
 
 
@@ -187,57 +197,7 @@ if ($_SESSION['registration_step'] < 2) {
                   </div>
                 </div>
               </div>
-              <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 col-6">
-                <div class="team_card mb-md-0 mb-24">
-                  <div class="image_block mb-16">
-                    <a href="team-detail.html"><img src="assets/media/team/doctor-2.png" alt=""></a>
-                    <ul class="social-media-links unstyled">
-                      <li><a href=""><img src="assets/media/icons/instagram.png" alt=""></a></li>
-                      <li><a href=""><img src="assets/media/icons/twitter.png" alt=""></a></li>
-                      <li><a href=""><img src="assets/media/icons/facebook.png" alt=""></a></li>
-                      <li><a href=""><img src="assets/media/icons/linkedin.png" alt=""></a></li>
-                    </ul>
-                  </div>
-                  <div class="text_block text-center">
-                    <h4 class="light-black mb-8"><a href="team-detail.html">Christopher Lee</a></h4>
-                    <h6 class="gray fw-600 m-0">ENT Specialist</h6>
-                  </div>
-                </div>
-              </div>
-              <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 col-6">
-                <div class="team_card">
-                  <div class="image_block mb-16">
-                    <a href="team-detail.html"><img src="assets/media/team/doctor-3.png" alt=""></a>
-                    <ul class="social-media-links unstyled">
-                      <li><a href=""><img src="assets/media/icons/instagram.png" alt=""></a></li>
-                      <li><a href=""><img src="assets/media/icons/twitter.png" alt=""></a></li>
-                      <li><a href=""><img src="assets/media/icons/facebook.png" alt=""></a></li>
-                      <li><a href=""><img src="assets/media/icons/linkedin.png" alt=""></a></li>
-                    </ul>
-                  </div>
-                  <div class="text_block text-center">
-                    <h4 class="light-black mb-8"><a href="team-detail.html">Liaquat National Hospital</a></h4>
-                    <h6 class="gray fw-600 m-0">Karachi</h6>
-                  </div>
-                </div>
-              </div>
-              <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 col-6">
-                <div class="team_card">
-                  <div class="image_block mb-16">
-                    <a href="team-detail.html"><img src="assets/media/team/doctor-4.png" alt=""></a>
-                    <ul class="social-media-links unstyled">
-                      <li><a href=""><img src="assets/media/icons/instagram.png" alt=""></a></li>
-                      <li><a href=""><img src="assets/media/icons/twitter.png" alt=""></a></li>
-                      <li><a href=""><img src="assets/media/icons/facebook.png" alt=""></a></li>
-                      <li><a href=""><img src="assets/media/icons/linkedin.png" alt=""></a></li>
-                    </ul>
-                  </div>
-                  <div class="text_block text-center">
-                    <h4 class="light-black mb-8"><a href="team-detail.html">Rebecca Harris</a></h4>
-                    <h6 class="gray fw-600 m-0">Cardiologist</h6>
-                  </div>
-                </div>
-              </div>
+        
             </div>
           </div>
           <a href="team.html" class="cus-btn d-flex m-auto">See All</a>
@@ -246,145 +206,32 @@ if ($_SESSION['registration_step'] < 2) {
       <!-- Team Section End -->
 
 
-      <!-- Testimonials Section Start -->
-    <section class="testimonials p-120">
+    <!-- Contact Us Banner Start -->
+    <section class="contact-us p-120">
       <div class="container">
         <div class="row">
-          <div class="col-xl-6 col-lg-6">
-            <h6 class="color-primary fw-600 mb-4p">Testimonials</h6>
-            <h2 class="light-black mb-16">See What Our Patients Say About Our Services</h2>
-            <p class="gray">Lorem ipsum dolor sit amet consectetur. Vestibulum elit eu vulputate tristique enim
-              molestie neque.
-              Ultricies arcu sed tempor integer. Nulla aliquet tellus vel dictum tempus.</p>
-          </div>
-          <div class="col-xl-6 col-lg-6">
-            <div class="testimonials-slider-1 mb-16">
-              <div class="slide-item">
-                <div class="testimonials-card">
-                  <div class="user-image">
-                    <img src="assets/media/users/user-1.png" alt="">
-                  </div>
-                  <div class="text-block">
-                    <h5>Sonia Cleric</h5>
-                    <p>Lorem ipsum dolor sit amet conse<br> ctetur. Vestibulum elit eu vulputate<br> tristique enim
-                      molestie.</p>
-                  </div>
-                  <img src="assets/media/icons/qoutes.png" alt="" class="quote-img">
-                </div>
+          <div class="contact-banner">
+            <div class="text-area">
+              <h2 class="white">Get Helpline Services with <br>one Call Away</h2>
+              <div class="d-flex align-items-center">
+                <a href="" class="h2 color-primary"><img src="assets/media/icons/telephone.png" alt="">+123 456
+                  789</a>
               </div>
-              <div class="slide-item">
-                <div class="testimonials-card">
-                  <div class="user-image">
-                    <img src="assets/media/users/user-2.png" alt="">
-                  </div>
-                  <div class="text-block">
-                    <h5>Moly Macrae</h5>
-                    <p>Lorem ipsum dolor sit amet conse<br> ctetur. Vestibulum elit eu vulputate<br> tristique enim
-                      molestie.</p>
-                  </div>
-                  <img src="assets/media/icons/qoutes.png" alt="" class="quote-img">
-                </div>
-              </div>
-              <div class="slide-item">
-                <div class="testimonials-card">
-                  <div class="user-image">
-                    <img src="assets/media/users/user-3.png" alt="">
-                  </div>
-                  <div class="text-block">
-                    <h5>Sonia Cleric</h5>
-                    <p>Lorem ipsum dolor sit amet conse<br> ctetur. Vestibulum elit eu vulputate<br> tristique enim
-                      molestie.</p>
-                  </div>
-                  <img src="assets/media/icons/qoutes.png" alt="" class="quote-img">
-                </div>
-              </div>
-            </div>
-            <div class="testimonials-slider-2">
-              <div class="slide-item">
-                <div class="testimonials-card">
-                  <div class="user-image">
-                    <img src="assets/media/users/user-1.png" alt="">
-                  </div>
-                  <div class="text-block">
-                    <h5>Sonia Cleric</h5>
-                    <p>Lorem ipsum dolor sit amet conse<br> ctetur. Vestibulum elit eu vulputate<br> tristique enim
-                      molestie.</p>
-                  </div>
-                  <img src="assets/media/icons/qoutes.png" alt="" class="quote-img">
-                </div>
-              </div>
-              <div class="slide-item">
-                <div class="testimonials-card">
-                  <div class="user-image">
-                    <img src="assets/media/users/user-4.png" alt="">
-                  </div>
-                  <div class="text-block">
-                    <h5>Moly Macrae</h5>
-                    <p>Lorem ipsum dolor sit amet conse<br> ctetur. Vestibulum elit eu vulputate<br> tristique enim
-                      molestie.</p>
-                  </div>
-                  <img src="assets/media/icons/qoutes.png" alt="" class="quote-img">
-                </div>
-              </div>
-              <div class="slide-item">
-                <div class="testimonials-card">
-                  <div class="user-image">
-                    <img src="assets/media/users/user-5.png" alt="">
-                  </div>
-                  <div class="text-block">
-                    <h5>Sonia Cleric</h5>
-                    <p>Lorem ipsum dolor sit amet conse<br> ctetur. Vestibulum elit eu vulputate<br> tristique enim
-                      molestie.</p>
-                  </div>
-                  <img src="assets/media/icons/qoutes.png" alt="" class="quote-img">
-                </div>
-              </div>
+              <h5 class="white mb-32">We are available for your help 24/7</h5>
+              <a href="contact.html" class="cus-btn">Contact Us</a>
             </div>
           </div>
         </div>
       </div>
     </section>
-    <!-- Testimonials Section End -->
+    <!-- Contact Us Banner End -->
 
     <!-- FAQ's Start -->
     <section class="faq">
       <div class="container">
         <div class="row">
-          <div class="col-xl-6 col-lg-6">
-            <h6 class="color-primary fw-600">FAQ's</h6>
-            <h2 class="light-black mb-32">All Your Questions Have Answers Here</h2>
-            <div class="faq-form">
-              <form method="post" action="index.html" class="form-group contact-from">
-                <div class="row">
-                  <div class="col-sm-12">
-                    <div class="icon-block mb-24">
-                      <label for="first_name" class="mb-4p">Name*</label>
-                      <input type="text" class="form-control" id="first_name" name="name" required
-                        placeholder="First Name">
-                    </div>
-                  </div>
-                  <div class="col-sm-12">
-                    <div class="icon-block mb-24">
-                      <label for="e-mail" class="mb-4p">Email*</label>
-                      <input type="email" class="form-control" id="e-mail" name="email" required
-                        placeholder="email@example.com">
-                    </div>
-                  </div>
-                  <div class="col-sm-12">
-                    <div class="icon-block mb-32">
-                      <label for="mssg" class="mb-4p">Question</label>
-                      <textarea name="message" class="form-control" id="mssg" cols="30" rows="5"
-                        placeholder="Hey there!"></textarea>
-                    </div>
-                  </div>
-                </div>
-                <button type="submit" class="cus-btn small-pad">Post Question</button>
-                <!-- Alert Message -->
-                <div id="messagee" class="alert-msg"></div>
-              </form>
-            </div>
-          </div>
-          <div class="col-xl-6 col-lg-6">
+       
+          <div class="col-xl-8 col-lg-8">
             <div class="row m-0 p-md-0 p-24" id="accordionExample">
               <div class="faq-block border-0">
                 <a href="#" class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#faq1"
@@ -476,25 +323,7 @@ if ($_SESSION['registration_step'] < 2) {
     </section>
     <!-- FAQ's End -->
 
-    <!-- Contact Us Banner Start -->
-    <section class="contact-us p-120">
-      <div class="container">
-        <div class="row">
-          <div class="contact-banner">
-            <div class="text-area">
-              <h2 class="white">Get Helpline Services with <br>one Call Away</h2>
-              <div class="d-flex align-items-center">
-                <a href="" class="h2 color-primary"><img src="assets/media/icons/telephone.png" alt="">+123 456
-                  789</a>
-              </div>
-              <h5 class="white mb-32">We are available for your help 24/7</h5>
-              <a href="contact.html" class="cus-btn">Contact Us</a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-    <!-- Contact Us Banner End -->
+
 
 
   </div>
